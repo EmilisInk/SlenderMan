@@ -13,6 +13,8 @@ public class Spawner : MonoBehaviour
 
     public LayerMask groundLayer;
 
+    public float yOffset = 0.5f;
+
     public TextMeshProUGUI collectibleCountText;
 
     private void Start()
@@ -21,14 +23,17 @@ public class Spawner : MonoBehaviour
         {
             var pos = new Vector3();
             pos.x = Random.Range(startPosition.x, endPosition.x);
-            pos.y = 500;
+            pos.y = 10f;
             pos.z = Random.Range(startPosition.z, endPosition.z);
 
-            if (Physics.Raycast(pos, Vector3.down, out RaycastHit hit, 1000, groundLayer))
+            if (Physics.Raycast(pos, Vector3.down, out RaycastHit hit, 1000f, groundLayer))
             {
                 var rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
 
-                Instantiate(prefab, hit.point, rotation);
+                Vector3 spawnPos = hit.point + new Vector3(0, yOffset, 0);
+
+
+                Instantiate(prefab, spawnPos, rotation);
             }
         }
 

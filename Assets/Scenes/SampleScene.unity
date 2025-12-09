@@ -1825,8 +1825,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 5802826669693251145, guid: b7f0b3d60430238458a3b5c90cabae08, type: 3}
   count: 50
-  startPosition: {x: 30, y: 0, z: 30}
-  endPosition: {x: 470, y: 0, z: 470}
+  startPosition: {x: 30, y: 2, z: 30}
+  endPosition: {x: 470, y: 2, z: 470}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
