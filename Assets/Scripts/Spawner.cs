@@ -13,7 +13,7 @@ public class Spawner : MonoBehaviour
 
     public LayerMask groundLayer;
 
-    public TextMeshProUGUI collectiblesText;
+    public TextMeshProUGUI collectibleCountText;
 
     private void Start()
     {
@@ -31,11 +31,19 @@ public class Spawner : MonoBehaviour
                 Instantiate(prefab, hit.point, rotation);
             }
         }
+
+        UpdateUI();
     }
 
-    private void Update()
+    public void Collect()
     {
-        collectiblesText.text = "Collectibles: " + count.ToString();
+        count--;
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        collectibleCountText.text = "Collectibles: " + count.ToString();
     }
 
 }

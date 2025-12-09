@@ -5,13 +5,24 @@ using UnityEngine;
 
 public class Collect : MonoBehaviour
 {
-    public TextMeshProUGUI collectibleCount;
+    public Enemy enemy;
 
-    private void OnCollisionEnter(Collision collision)
+    private void Start()
     {
-        if(collision.transform.CompareTag("Player"))
+        enemy = FindObjectOfType<Enemy>();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            
+            Spawner spawner = FindObjectOfType<Spawner>();
+            spawner.Collect();
+
+            enemy.IncreaseSpeed();
+
+
+            Destroy(gameObject);
         }
     }
 }

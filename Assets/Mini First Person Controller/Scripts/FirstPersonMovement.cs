@@ -25,20 +25,19 @@ public class FirstPersonMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Update IsRunning from input.
         IsRunning = canRun && Input.GetKey(runningKey);
-
-        // Get targetMovingSpeed.
         float targetMovingSpeed = IsRunning ? runSpeed : speed;
+
         if (speedOverrides.Count > 0)
         {
             targetMovingSpeed = speedOverrides[speedOverrides.Count - 1]();
         }
 
-        // Get targetVelocity from input.
-        Vector2 targetVelocity =new Vector2( Input.GetAxis("Horizontal") * targetMovingSpeed, Input.GetAxis("Vertical") * targetMovingSpeed);
+        Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
+        Vector3 movement = transform.rotation * inputDirection * targetMovingSpeed * Time.fixedDeltaTime;
 
-        // Apply movement.
-        rigidbody.velocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.velocity.y, targetVelocity.y);
+        // Instead of setting velocity, move the rigidbody smoothly
+        rigidbody.MovePosition(rigidbody.position + movement);
     }
+
 }
