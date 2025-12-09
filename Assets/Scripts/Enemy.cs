@@ -25,7 +25,9 @@ public class Enemy : MonoBehaviour
     {
         float distanceToPlayer = Vector3.Distance(transform.position, target.position);
 
-        if (distanceToPlayer <= 10f)
+        Debug.Log("Distance to Player: " + distanceToPlayer);
+
+        if (distanceToPlayer <= 40f)
         {
             Chase();
         }
