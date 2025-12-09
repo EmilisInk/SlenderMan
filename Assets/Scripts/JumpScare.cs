@@ -1,35 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class JumpScare : MonoBehaviour
 {
-    public Image image;
+    public Image Image;
+    public Transform Target;
+    public Enemy Enemy;
 
-    public Transform target;
+    private AudioSource audioSource;
 
-    public Enemy enemy;
+    public bool isShowing = false;
+
+    public TextMeshProUGUI gameover;
 
     private void Start()
     {
-        image = GetComponent<Image>();
-        image.enabled = false;
+        Image = GetComponent<Image>();
+
+        Image.enabled = false;
+        gameover.enabled = false;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
-    public void showImage()
+    private void Update()
     {
-        enemy = FindObjectOfType<Enemy>();
+        
+        float distanceToPlayer = Vector3.Distance(Enemy.transform.position, Target.position);
+        bool shouldShow = distanceToPlayer <= 2f;
+        Debug.Log("Distance: " + distanceToPlayer + " Should show: " + shouldShow);
 
-        float distanceToPlayer = Vector3.Distance(transform.position, target.position);
+        
 
-        if (distanceToPlayer <= 2)
+        if (shouldShow && !isShowing)
         {
-            image.enabled = true;
+            Image.enabled = true;
+            audioSource.Play();
+            isShowing = true;
+            gameover.enabled = true;
+
+            Invoke("RestartGame", 2f);
         }
-        else
-        {
-            image.enabled = false;
-        }
+    }
+
+    void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
+

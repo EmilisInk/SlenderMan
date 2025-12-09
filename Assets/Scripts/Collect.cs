@@ -5,11 +5,14 @@ using UnityEngine;
 
 public class Collect : MonoBehaviour
 {
-    public Enemy enemy;
+    private Enemy enemy;
+
+    private AudioSource collectSound;
 
     private void Start()
     {
         enemy = FindObjectOfType<Enemy>();
+        collectSound = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -18,6 +21,7 @@ public class Collect : MonoBehaviour
         {
             Spawner spawner = FindObjectOfType<Spawner>();
             spawner.Collect();
+            AudioSource.PlayClipAtPoint(collectSound.clip, transform.position);
 
             enemy.IncreaseSpeed();
 
